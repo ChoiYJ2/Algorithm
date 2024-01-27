@@ -21,7 +21,7 @@ void checkPrime()
 
 void calcLCM()
 {
-	if (primeNums.size() >= 2)
+	if (prime_size >= 2)
 	{
 		long long int lcm = primeNums[0];
 		for (int i = 1; i < prime_size; i++)
