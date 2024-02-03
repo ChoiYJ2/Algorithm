@@ -3,9 +3,6 @@
 
 using namespace std;
 
-int dy[] = { 0, 1, 0, -1 };
-int dx[] = { 1, 0, -1, 0 };
-
 int arr[501][501];
 int new_arr[501][501];
 
