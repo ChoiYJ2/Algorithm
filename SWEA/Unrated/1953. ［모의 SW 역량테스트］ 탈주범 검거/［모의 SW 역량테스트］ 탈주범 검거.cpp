@@ -68,7 +68,7 @@ void bfs(int y, int x, int tunnel)
                 continue;
             if (map[ny][nx] == 0)
                 continue;
-            if ((dy[now.tunnelNum][i] != -dy[map[ny][nx]][(i + 2) % 4]) || (dx[now.tunnelNum][i] != -dx[map[ny][nx]][(i + 2) % 4]))
+            if ((abs(dy[now.tunnelNum][i]) != abs(dy[map[ny][nx]][(i + 2) % 4])) || (abs(dx[now.tunnelNum][i]) != abs(dx[map[ny][nx]][(i + 2) % 4])))
                 continue;
 
             checkPoint++;
