@@ -35,7 +35,6 @@ struct Point
     int y;
     int x;
     int tunnelNum;
-    int timeToRunaway;
 };
 
 void init()
@@ -48,16 +47,16 @@ void init()
     checkPoint = 1;
 }
 
-void bfs(int y, int x, int tunnel, int startTime)
+void bfs(int y, int x, int tunnel)
 {
     queue<Point> q;
     visited[y][x] = 1;
-    q.push({ y, x, tunnel, startTime - 1 });
+    q.push({ y, x, tunnel });
     while (!q.empty())
     {
         Point now = q.front();
         q.pop();
-        if (now.timeToRunaway == 0)
+        if (visited[now.y][now.x] == L)
             return;
         for (int i = 0; i < 4; i++)
         {
@@ -69,12 +68,12 @@ void bfs(int y, int x, int tunnel, int startTime)
                 continue;
             if (map[ny][nx] == 0)
                 continue;
-            if ((abs(dy[now.tunnelNum][i]) != abs(dy[map[ny][nx]][(i + 2) % 4])) || (abs(dx[now.tunnelNum][i]) != abs(dx[map[ny][nx]][(i + 2) % 4])))
+            if ((dy[now.tunnelNum][i] != -dy[map[ny][nx]][(i + 2) % 4]) || (dx[now.tunnelNum][i] != -dx[map[ny][nx]][(i + 2) % 4]))
                 continue;
 
             checkPoint++;
-            visited[ny][nx] = 1;
-            q.push({ ny, nx, map[ny][nx], now.timeToRunaway - 1 });
+            visited[ny][nx] = visited[now.y][now.x] + 1;
+            q.push({ ny, nx, map[ny][nx] });
         }
     }
 }
@@ -92,7 +91,7 @@ int main()
             for (int j = 0; j < m; j++)
                 cin >> map[i][j];
         }
-        bfs(r, c, map[r][c], L);
+        bfs(r, c, map[r][c]);
         cout << "#" << test_case << " " << checkPoint << "\n";
     }
     return 0;
