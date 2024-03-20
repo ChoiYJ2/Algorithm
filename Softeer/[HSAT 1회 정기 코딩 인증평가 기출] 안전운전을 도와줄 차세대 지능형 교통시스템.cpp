@@ -32,15 +32,17 @@ void bfs(int y, int x)
         Car now = q.front();
         q.pop();
         int nowLightNum = trafficLight[now.y][now.x][nowTime];
-        cout << trafficSignal[nowLightNum][0] << "\n";
+        //for(int i = 0; i < 4; i++)
+            //cout << trafficLight[now.y][now.x][i] << "\n";
+        cout << nowLightNum << "\n";
         cout << now.dir << "\n";
-        if (now.dir != trafficSignal[nowLightNum][0])
+        if (now.dir != nowLightNum)
             continue;
 
         int nowSignal[3];
-        for (int i = 1; i < 3; i++)
+        for (int i = 0; i < 3; i++)
             nowSignal[i] = trafficSignal[nowLightNum][i];
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             int ny = now.y + dy[nowSignal[i]];
             int nx = now.x + dx[nowSignal[i]];
