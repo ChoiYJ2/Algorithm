@@ -34,10 +34,17 @@ void bfs()
         q.pop();
         moving++;
         if(now.nowTime > t)
+        {
+            cout << "time out";
             return;
+        }
         int nowLightSignal = trafficSignal[now.y][now.x][now.nowTime % 4];
         if(now.direction != signal[nowLightSignal][0])
-            return;
+        {
+            cout << now.direction << " " << signal[nowLightSignal][0] << "\n";
+            cout << "direction error";
+            continue;
+        }
 
         int tmpSignal[3];
         for(int i = 0; i < 3; i++)
@@ -53,6 +60,10 @@ void bfs()
             if(visited[ny][nx])
                 continue;
             visited[ny][nx] = 1;
+            cout << "time: " << now.nowTime + 1 << " - ";
+            cout << nowLightSignal << "*";
+            cout << tmpSignal[i] << ": ";
+            cout << "(" << ny << "," << nx << ")\n";
             q.push({ny, nx, tmpSignal[i], now.nowTime + 1});
         }
     }
