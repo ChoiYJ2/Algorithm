@@ -1,49 +1,69 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
 
 using namespace std;
 
 int n;
-int personRank[4][100001];
-int scores[4][100001];
 
-void calcRanks(int contestNum)
+struct ContestScore
 {
-    for(int i = 0; i < n - 1; i++)
+    int score;
+    int personNum;
+
+    bool operator<(ContestScore a) const
     {
-        for(int j = i + 1; j < n; j++)
-        {
-            if(scores[contestNum][i] > scores[contestNum][j])
-                personRank[contestNum][j]++;
-            else if(scores[contestNum][i] < scores[contestNum][j])
-                personRank[contestNum][i]++;
-        }
+        if(score > a.score)
+            return true;
+        if(score < a.score)
+            return false;
+        return false;
+    }
+};
+vector<ContestScore> scores(100001);
+vector<ContestScore> totalScores(100001);
+int ContestRank[100001];
+
+void calcRanks(vector<ContestScore>& nowScore)
+{
+    int prevScore = -1;
+    int prevRank = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(nowScore[i].score == prevScore)
+            ContestRank[nowScore[i].personNum] = prevRank;
+        else
+            ContestRank[nowScore[i].personNum] = i + 1;
+        prevRank = ContestRank[nowScore[i].personNum];
+        prevScore = nowScore[i].score;
     }
 }
 
 int main()
 {
     cin >> n;
-    for(int i = 0; i < 3; i++)
+    for(int contest = 0; contest < 3; contest++)
     {
-        for(int j = 0; j < n; j++)
+        for(int i = 0; i < n; i++)
         {
-            cin >> scores[i][j];
-            scores[3][j] += scores[i][j];
+            int s;
+            cin >> s;
+            scores[i] = {s, i};
+            totalScores[i] = {totalScores[i].score + s, i};
         }
-    }
-    
-    for(int i = 0; i < 4; i++)
-        fill(personRank[i], personRank[i] + n, 1);
-    
-    for(int i = 0; i < 4; i++)
-        calcRanks(i);
 
-    for(int i = 0; i < 4; i++)
-    {
-        for(int j = 0; j < n; j++)
-            cout << personRank[i][j] << " ";
+        sort(scores.begin(), scores.begin() + n);
+        calcRanks(scores);
+
+        for(int i = 0; i < n; i++)
+            cout << ContestRank[i] << " ";
         cout << "\n";
     }
+
+    sort(totalScores.begin(), totalScores.begin() + n);
+    calcRanks(totalScores);
+
+    for(int i = 0; i < n; i++)
+            cout << ContestRank[i] << " ";
     return 0;
 }
