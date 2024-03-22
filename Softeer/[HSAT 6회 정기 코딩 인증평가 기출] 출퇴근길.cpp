@@ -1,67 +1,61 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 
 using namespace std;
 
-int n, m;
-int s, t;
+int n, m, s, t;
 vector<int> road[100001];
-int goToWork[100001];
-int goToHome[100001];
-int nodeCnt;
+int homeTocompany[100001];
+int dat[100001];
+int cnt;
 
-void GoToCompany(int start, int end)
+void dfs(int start, int end, int now)
 {
-	queue<int> q;
-	q.push(start);
-	while (!q.empty())
-	{
-		int now = q.front();
-		if (now == end)
-			return;
-		q.pop();
-		for (int i = 0; i < road[now].size(); i++)
-		{
-			if(road[now][i] != end && road[now][i] != start)
-				goToWork[road[now][i]] = 1;
-			q.push(road[now][i]);
-		}
-	}
-}
-
-void GoToHome(int start, int end)
-{
-	queue<int> q;
-	q.push(start);
-	while (!q.empty())
-	{
-		int now = q.front();
-		if (now == end)
-			return;
-		q.pop();
-		for (int i = 0; i < road[now].size(); i++)
-		{
-			if (goToWork[road[now][i]] && !goToHome[road[now][i]])
-				nodeCnt++;
-			goToHome[road[now][i]] = 1;
-			q.push(road[now][i]);
-		}
-	}
+    if(now == end)
+    {
+        for(int i = 1; i <= n; i++)
+        {
+            if(end == t && dat[i])
+            {
+                if(homeTocompany[i])
+                    continue;
+                homeTocompany[i] = 1;
+                dat[i] = 0;
+            }
+            else if(end != t && homeTocompany[i] && dat[i])
+            {
+                homeTocompany[i] = 0;
+                dat[i] = 0;
+                cnt++;
+            } 
+        }
+        return;
+    }
+    for(int i = 0; i < road[now].size(); i++)
+    {
+        if(dat[road[now][i]])
+            continue;
+        if(road[now][i] != start && road[now][i] != end)
+            dat[road[now][i]] = 1;
+        dfs(start, end, road[now][i]);
+        dat[road[now][i]] = 0;
+    }
 }
 
 int main()
 {
-	cin >> n >> m;
-	for (int i = 0; i < m; i++)
-	{
-		int from, to;
-		cin >> from >> to;
-		road[from].push_back(to);
-	}
-	cin >> s >> t;
-	GoToCompany(s, t);
-	GoToHome(t, s);
-	cout << nodeCnt;
-	return 0;
+    cin >> n >> m;
+    for(int i = 0; i < m; i++)
+    {
+        int from, to;
+        cin >> from >> to;
+        road[from].push_back(to);
+    }
+    cin >> s >> t;
+
+    dfs(s, t, s);
+    dfs(t, s, t);
+
+    cout << cnt;
+    return 0;
 }
