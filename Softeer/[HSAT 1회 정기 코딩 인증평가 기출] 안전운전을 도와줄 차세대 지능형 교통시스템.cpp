@@ -27,14 +27,15 @@ void bfs()
 {
     queue<Car> q;
     q.push({ 1, 1, 1, 0 });
-    visited[1][1] = 1;
     while (!q.empty())
     {
         Car now = q.front();
         q.pop();
         if (now.nowTime > t)
             return;
-        moving++;
+        if(!visited[now.y][now.x])
+            moving++;
+        visited[now.y][now.x] = 1;
         int nowLightSignal = trafficSignal[now.y][now.x][now.nowTime % 4];
         if (now.direction != signal[nowLightSignal][0])
             continue;
@@ -50,10 +51,6 @@ void bfs()
 
             if (ny < 1 || nx < 1 || ny > n || nx > n)
                 continue;
-            if (visited[ny][nx])
-                continue;
-
-            visited[ny][nx] = 1;
             
             q.push({ ny, nx, tmpSignal[i], now.nowTime + 1 });
         }
