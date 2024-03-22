@@ -15,19 +15,24 @@ void dfs(int start, int end, int now)
     {
         for(int i = 1; i <= n; i++)
         {
-            if(end == t && dat[i])
+            if((end == t && homeTocompany[i]) && (end != t && !homeTocompany[i]))
+                continue;
+            if(i == start || i == end)
+                continue;
+            if(!dat[i])
+                continue;
+            //dat[i] = 0;
+            if(end == t && !homeTocompany[i])
             {
-                if(homeTocompany[i])
-                    continue;
                 homeTocompany[i] = 1;
                 dat[i] = 0;
             }
-            else if(end != t && homeTocompany[i] && dat[i])
+            else if(end != t && homeTocompany[i])
             {
                 homeTocompany[i] = 0;
                 dat[i] = 0;
                 cnt++;
-            } 
+            }
         }
         return;
     }
