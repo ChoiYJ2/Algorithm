@@ -6,7 +6,7 @@ using namespace std;
 
 int n, m;
 char board[51][51];
-int visited[51][51];
+int visited[8][8];
 int minChange = 2134567890;
 
 int dy[] = { -1, 1, 0, 0 };
@@ -19,17 +19,16 @@ struct Coord
 void bfs(int y, int x, int nowColor)
 {
     queue<Coord> q;
-    q.push({ y, x });
-    visited[y][x] = 1;
+    q.push({ 0, 0 });
+    visited[0][0] = 1;
     int change = 0;
-    char subBoard[51][51];
-    memset(subBoard, ' ', sizeof(subBoard));
-    for (int i = y; i < y + 8; i++)
+    char subBoard[8][8];
+    for (int i = 0; i < 8; i++)
     {
-        for (int j = x; j < x + 8; j++)
-            subBoard[i][j] = board[i][j];
+        for (int j = 0; j < 8; j++)
+            subBoard[i][j] = board[y + i][x + j];
     }
-    subBoard[y][x] = nowColor;
+    subBoard[0][0] = nowColor;
     if (nowColor != board[y][x])
         change++;
     while (!q.empty())
@@ -42,7 +41,7 @@ void bfs(int y, int x, int nowColor)
         {
             int ny = now.y + dy[i];
             int nx = now.x + dx[i];
-            if (ny < y || nx < x || abs(ny - y) >= 8 || abs(nx - x) >= 8)
+            if (ny < 0 || nx < 0 || ny >= 8 || nx >= 8)
                 continue;
             if (visited[ny][nx])
                 continue;
