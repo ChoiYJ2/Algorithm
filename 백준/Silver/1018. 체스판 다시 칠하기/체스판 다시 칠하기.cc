@@ -43,11 +43,6 @@ void bfs(int y, int x)
                 continue;
             if (visited[ny][nx])
                 continue;
-            /*if (board[ny][nx] == board[now.y][now.x] && visited++    [now.y][now.x] == 1 && visited[ny][nx] == 0)
-            {
-                visited[ny][nx]++;
-                change++;
-            }*/
             visited[ny][nx]++;
             if (subBoard[ny][nx] == subBoard[now.y][now.x])
             {
@@ -89,11 +84,6 @@ void bfs(int y, int x)
                 continue;
             if (visited[ny][nx])
                 continue;
-            /*if (board[ny][nx] == board[now.y][now.x] && visited++    [now.y][now.x] == 1 && visited[ny][nx] == 0)
-            {
-                visited[ny][nx]++;
-                change++;
-            }*/
             visited[ny][nx]++;
             if (subBoard[ny][nx] == subBoard[now.y][now.x])
             {
