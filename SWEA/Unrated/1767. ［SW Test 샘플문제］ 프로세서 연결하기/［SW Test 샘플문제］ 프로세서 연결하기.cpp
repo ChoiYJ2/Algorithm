@@ -27,9 +27,6 @@ void init()
 
 void dfs(int nowCore, int nowWire, int idx)
 {
-	if (nowCore + (cores.size() - idx) < maxCore)
-		return;
-
 	if (idx == cores.size())
 	{
 		if (nowCore >= maxCore)
@@ -44,6 +41,9 @@ void dfs(int nowCore, int nowWire, int idx)
 		}
 		return;
 	}
+
+	if (nowCore + (cores.size() - idx) < maxCore)
+		return;
 
 	for (int i = idx; i < cores.size(); i++)
 	{
