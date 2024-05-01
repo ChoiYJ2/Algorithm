@@ -27,6 +27,9 @@ void init()
 
 void dfs(int nowCore, int nowWire, int idx)
 {
+	if (nowCore + (cores.size() - idx) < maxCore)
+		return;
+
 	if (idx == cores.size())
 	{
 		if (nowCore >= maxCore)
@@ -41,9 +44,6 @@ void dfs(int nowCore, int nowWire, int idx)
 		}
 		return;
 	}
-
-	if (nowCore + (cores.size() - idx) < maxCore)
-		return;
 
 	for (int i = idx; i < cores.size(); i++)
 	{
@@ -79,7 +79,6 @@ void dfs(int nowCore, int nowWire, int idx)
 
 int main()
 {
-	ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 	int t;
 	cin >> t;
 	for (int test_case = 1; test_case <= t; test_case++)
