@@ -113,6 +113,7 @@ void dfs(int lev)
 
 int main()
 {
+	ios::sync_with_stdio(false); cin.tie(0);
 	int t;
 	cin >> t;
 	for (int test_case = 1; test_case <= t; test_case++)
