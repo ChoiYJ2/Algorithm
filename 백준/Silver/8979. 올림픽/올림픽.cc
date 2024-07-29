@@ -52,9 +52,8 @@ int main()
 				stack++;
 			else
 			{
-				if (stack == 0)
-					rank++;
-				else
+				rank++;
+				if(stack != 0)
 					rank += stack;
 				stack = 0;
 			}
